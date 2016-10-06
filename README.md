@@ -4,7 +4,7 @@ Contains the answers for this [test](https://github.com/zbsz/test_app)
 
 ## Features
 
-1. Lazy loading messages (All downloaded messages are logged in the app)
+1. Lazy loading messages 
 2. Functions to persist/cache messages in database(inside db package)  
 3. Delete messages(mark as deleted from db)  
 
