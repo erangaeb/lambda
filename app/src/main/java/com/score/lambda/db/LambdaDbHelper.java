@@ -10,12 +10,12 @@ import android.util.Log;
  *
  * @author erangaeb@gmail.com(eranga herath)
  */
-public class SenzorsDbHelper extends SQLiteOpenHelper {
+public class LambdaDbHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = SenzorsDbHelper.class.getName();
+    private static final String TAG = LambdaDbHelper.class.getName();
 
     // we use singleton database
-    private static SenzorsDbHelper senzorsDbHelper;
+    private static LambdaDbHelper senzorsDbHelper;
 
     // If you change the database schema, you must increment the database version
     private static final int DATABASE_VERSION = 1;
@@ -26,16 +26,16 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
     private static final String INT_TYPE = " INTEGER";
 
     private static final String SQL_CREATE_LAMBDA =
-            "CREATE TABLE " + SenzorsDbContract.Lambda.TABLE_NAME + " (" +
-                    SenzorsDbContract.Lambda._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
-                    SenzorsDbContract.Lambda.COLUMN_NAME_ID + TEXT_TYPE + ", " +
-                    SenzorsDbContract.Lambda.COLUMN_NAME_TIMESTAMP + INT_TYPE + ", " +
-                    SenzorsDbContract.Lambda.COLUMN_NAME_TEXT + TEXT_TYPE + ", " +
-                    SenzorsDbContract.Lambda.COLUMN_NAME_DELETED + INT_TYPE +
+            "CREATE TABLE " + LambdaDbContract.Lambda.TABLE_NAME + " (" +
+                    LambdaDbContract.Lambda._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
+                    LambdaDbContract.Lambda.COLUMN_NAME_ID + TEXT_TYPE + ", " +
+                    LambdaDbContract.Lambda.COLUMN_NAME_TIMESTAMP + INT_TYPE + ", " +
+                    LambdaDbContract.Lambda.COLUMN_NAME_TEXT + TEXT_TYPE + ", " +
+                    LambdaDbContract.Lambda.COLUMN_NAME_DELETED + INT_TYPE +
                     " )";
 
     private static final String SQL_DELETE_LAMBDA =
-            "DROP TABLE IF EXISTS " + SenzorsDbContract.Lambda.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + LambdaDbContract.Lambda.TABLE_NAME;
 
     /**
      * Init context
@@ -43,7 +43,7 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
      *
      * @param context application context
      */
-    public SenzorsDbHelper(Context context) {
+    public LambdaDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -53,9 +53,9 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
      * @param context application context
      * @return db helper instance
      */
-    synchronized static SenzorsDbHelper getInstance(Context context) {
+    synchronized static LambdaDbHelper getInstance(Context context) {
         if (senzorsDbHelper == null) {
-            senzorsDbHelper = new SenzorsDbHelper(context.getApplicationContext());
+            senzorsDbHelper = new LambdaDbHelper(context.getApplicationContext());
         }
         return (senzorsDbHelper);
     }

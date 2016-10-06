@@ -1,8 +1,10 @@
 package com.score.lambda.asyn;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.score.lambda.listener.ILambdaFetchListener;
+import com.score.lambda.pojo.Lambda;
 import com.score.lambda.util.LambdaParser;
 
 import org.json.JSONException;
@@ -15,7 +17,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Async task which handled fetching lambdas,
+ *
+ * @author erangaeb@gmail.com (eranga herath)
+ */
 public class LambdaFetcher extends AsyncTask<String, Void, String> {
+
+    private static final String TAG = LambdaFetcher.class.getName();
 
     private ILambdaFetchListener listener;
 
@@ -25,10 +34,12 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        return doGet(params[0]);
+        return fetchLambdas(params[0]);
     }
 
-    private String doGet(String uri) {
+    private String fetchLambdas(String uri) {
+        Log.d(TAG, "Fetch lambdas with uri " + uri);
+
         HttpURLConnection connection;
         try {
             URL url = new URL(uri);
@@ -65,7 +76,6 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
-        System.out.println(response);
 
         if (response == null) {
             listener.onFetchError();
@@ -73,9 +83,16 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
             listener.onFetchEnd();
         } else {
             // have data
+            Log.d(TAG, response);
+
             try {
-                ArrayList lambdaList = LambdaParser.getLambdaList(response);
+                // parse and save lambdas
+                ArrayList<Lambda> lambdaList = LambdaParser.getLambdaList(response);
+
+                // TODO save lambdas from here
+
                 listener.onFetchDone(lambdaList);
+
             } catch (JSONException e) {
                 e.printStackTrace();
                 listener.onFetchError();

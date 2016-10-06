@@ -8,7 +8,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * JSON parser of lambda app
+ *
+ * @author erangaeb@gmail.com(eranga herath)
+ */
 public class LambdaParser {
+
+    /**
+     * Parse JSON and identify lambda list
+     *
+     * @param in json string
+     * @return lambda list
+     * @throws JSONException
+     */
     public static ArrayList<Lambda> getLambdaList(String in) throws JSONException {
         ArrayList<Lambda> lambdaList = new ArrayList<>();
 

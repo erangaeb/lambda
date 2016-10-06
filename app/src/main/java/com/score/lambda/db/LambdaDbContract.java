@@ -7,9 +7,9 @@ import android.provider.BaseColumns;
  *
  * @author erangaeb@gmail.com (eranga herath)
  */
-public class SenzorsDbContract {
+public class LambdaDbContract {
 
-    public SenzorsDbContract() {
+    public LambdaDbContract() {
     }
 
     /* Inner class that defines sensor table contents */

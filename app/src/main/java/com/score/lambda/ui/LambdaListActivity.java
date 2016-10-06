@@ -20,7 +20,12 @@ import com.score.lambda.util.NetworkUtil;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity implements ILambdaFetchListener, AbsListView.OnScrollListener,
+/**
+ * Lambda list activity
+ *
+ * @author erangaeb@gmail.com (eranga herath)
+ */
+public class LambdaListActivity extends AppCompatActivity implements ILambdaFetchListener, AbsListView.OnScrollListener,
         AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     private int nextPageToFetch = 0;
@@ -32,6 +37,9 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
     private LambdaListAdapter lambdaAdapter;
     private ArrayList<Lambda> lambdaList = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +84,11 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
         if (NetworkUtil.isAvailableNetwork(this)) {
             ActivityUtils.showProgressDialog(this, "Fetching lambdas...");
             String uri = "https://rawgit.com/zbsz/test_app/master/" + page + ".json";
-            new LambdaFetcher(HomeActivity.this).execute(uri);
+            new LambdaFetcher(LambdaListActivity.this).execute(uri);
         } else {
             Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();
+
+            // TODO fetch lambdas from db from here
         }
     }
 
@@ -105,14 +115,23 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
         Toast.makeText(this, "No more lambdas", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Lambda lambda = lambdaList.get(position);
@@ -123,6 +142,9 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         Lambda lambda = lambdaList.get(position);

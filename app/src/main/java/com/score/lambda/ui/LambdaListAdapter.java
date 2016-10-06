@@ -14,6 +14,11 @@ import com.score.lambda.pojo.Lambda;
 
 import java.util.ArrayList;
 
+/**
+ * Display lambdas in the list from here
+ *
+ * @author erangaeb@gmail.com (eranga herath)
+ */
 public class LambdaListAdapter extends BaseAdapter {
 
     private Context context;

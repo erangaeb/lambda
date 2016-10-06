@@ -9,7 +9,7 @@
         android:icon="@drawable/lambda"
         android:label="@string/app_name">
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.LambdaListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme">
             <intent-filter>
