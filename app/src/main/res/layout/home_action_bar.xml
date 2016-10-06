@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="15dp"
-        android:padding="3dp"
+        android:padding="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/lambda" />
 
@@ -24,5 +24,6 @@
         android:adjustViewBounds="true"
         android:padding="4dp"
         android:scaleType="fitXY"
+        android:src="@drawable/bin"
         android:visibility="gone" />
 </RelativeLayout>
