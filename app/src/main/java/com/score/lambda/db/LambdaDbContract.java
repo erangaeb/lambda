@@ -17,7 +17,7 @@ public class LambdaDbContract {
         public static final String TABLE_NAME = "lambda";
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_TIMESTAMP = "timestamp";
-        public static final String COLUMN_NAME_TEXT = "text";
+        public static final String COLUMN_NAME_TEXT = "txt";
         public static final String COLUMN_NAME_DELETED = "deleted";
     }
 }

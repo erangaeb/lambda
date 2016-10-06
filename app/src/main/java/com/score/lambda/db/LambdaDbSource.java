@@ -2,10 +2,13 @@ package com.score.lambda.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.score.lambda.pojo.Lambda;
+
+import java.util.ArrayList;
 
 /**
  * Do all database insertions, updated, deletions from here
@@ -53,7 +56,7 @@ public class LambdaDbSource {
      *
      * @param lambda lambda
      */
-    public void delteLambda(Lambda lambda) {
+    public void deleteLambda(Lambda lambda) {
         SQLiteDatabase db = LambdaDbHelper.getInstance(context).getWritableDatabase();
 
         // content values to inset
@@ -72,8 +75,31 @@ public class LambdaDbSource {
     /**
      * Find all non deleted lambdas from db
      */
-    public void getAllLambdas() {
+    public ArrayList<Lambda> getAllLambdas() {
+        ArrayList<Lambda> lambdaList = new ArrayList<>();
 
+        SQLiteDatabase db = LambdaDbHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.query(LambdaDbContract.Lambda.TABLE_NAME, null, null, null, null, null, null);
+
+        // lambda attributes
+        String _id;
+        int _time;
+        String _text;
+
+        // extract attributes
+        while (cursor.moveToNext()) {
+            _id = cursor.getString(cursor.getColumnIndex(LambdaDbContract.Lambda.COLUMN_NAME_ID));
+            _time = cursor.getInt(cursor.getColumnIndex(LambdaDbContract.Lambda.COLUMN_NAME_TIMESTAMP));
+            _text = cursor.getString(cursor.getColumnIndex(LambdaDbContract.Lambda.COLUMN_NAME_TEXT));
+
+            lambdaList.add(new Lambda(_id, _time, _text));
+        }
+
+        // clean
+        cursor.close();
+        db.close();
+
+        return lambdaList;
     }
 
 }

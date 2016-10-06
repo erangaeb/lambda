@@ -19,13 +19,13 @@ import java.util.ArrayList;
  *
  * @author erangaeb@gmail.com (eranga herath)
  */
-public class LambdaListAdapter extends BaseAdapter {
+class LambdaListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Lambda> lambdaList;
     private Typeface typeface;
 
-    public LambdaListAdapter(Context context, ArrayList<Lambda> lambdaAList) {
+    LambdaListAdapter(Context context, ArrayList<Lambda> lambdaAList) {
         this.context = context;
         this.lambdaList = lambdaAList;
 
@@ -84,6 +84,12 @@ public class LambdaListAdapter extends BaseAdapter {
         return view;
     }
 
+    /**
+     * Set up list view row
+     *
+     * @param lambda     lambda obj
+     * @param viewHolder view holder
+     */
     private void setUpRow(Lambda lambda, ViewHolder viewHolder) {
         viewHolder.id.setText(lambda.getId().substring(0, 5));
         viewHolder.time.setText(lambda.getTimestamp() + "");

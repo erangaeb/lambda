@@ -18,8 +18,8 @@ public class LambdaDbHelper extends SQLiteOpenHelper {
     private static LambdaDbHelper senzorsDbHelper;
 
     // If you change the database schema, you must increment the database version
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "lambda.db";
+    private static final int DATABASE_VERSION = 8;
+    private static final String DATABASE_NAME = "Lambda.db";
 
     // data types, keywords and queries
     private static final String TEXT_TYPE = " TEXT";
@@ -32,7 +32,7 @@ public class LambdaDbHelper extends SQLiteOpenHelper {
                     LambdaDbContract.Lambda.COLUMN_NAME_TIMESTAMP + INT_TYPE + ", " +
                     LambdaDbContract.Lambda.COLUMN_NAME_TEXT + TEXT_TYPE + ", " +
                     LambdaDbContract.Lambda.COLUMN_NAME_DELETED + INT_TYPE +
-                    " )";
+                    ")";
 
     private static final String SQL_DELETE_LAMBDA =
             "DROP TABLE IF EXISTS " + LambdaDbContract.Lambda.TABLE_NAME;
@@ -66,6 +66,8 @@ public class LambdaDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "OnCreate: creating db helper, db version - " + DATABASE_VERSION);
         Log.d(TAG, SQL_CREATE_LAMBDA);
+
+        db.execSQL(SQL_CREATE_LAMBDA);
     }
 
     /**

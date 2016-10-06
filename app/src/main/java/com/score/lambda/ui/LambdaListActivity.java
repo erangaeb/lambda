@@ -29,6 +29,8 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     private int nextPageToFetch = 0;
+    private boolean isFetchingLambda = false;
+    private int lastFirstVisibleItem;
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -51,6 +53,9 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         fetchNext(nextPageToFetch);
     }
 
+    /**
+     * Initialize list view
+     */
     private void initLambdaList() {
         lambdaListView = (ListView) findViewById(R.id.lambda_list);
         lambdaListView.setOnScrollListener(this);
@@ -61,6 +66,9 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         lambdaListView.setAdapter(lambdaAdapter);
     }
 
+    /**
+     * Initialize toolbar
+     */
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setCollapsible(false);
@@ -68,6 +76,9 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         setSupportActionBar(toolbar);
     }
 
+    /**
+     * Initialize action bar
+     */
     private void initActionBar() {
         actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -80,6 +91,11 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         }
     }
 
+    /**
+     * Fetch next lambdas
+     *
+     * @param page next page
+     */
     private void fetchNext(int page) {
         if (NetworkUtil.isAvailableNetwork(this)) {
             ActivityUtils.showProgressDialog(this, "Fetching lambdas...");
@@ -96,6 +112,7 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
     public void onFetchDone(ArrayList<Lambda> list) {
         // reload list
         ActivityUtils.cancelProgressDialog();
+        isFetchingLambda = false;
 
         lambdaList.addAll(list);
         lambdaAdapter.notifyDataSetChanged();
@@ -105,6 +122,7 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
     public void onFetchError() {
         // display failed to fetch
         ActivityUtils.cancelProgressDialog();
+        isFetchingLambda = false;
         Toast.makeText(this, "Fetch error", Toast.LENGTH_LONG).show();
     }
 
@@ -112,6 +130,7 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
     public void onFetchEnd() {
         // display failed to fetch
         ActivityUtils.cancelProgressDialog();
+        isFetchingLambda = false;
         Toast.makeText(this, "No more lambdas", Toast.LENGTH_LONG).show();
     }
 
@@ -127,6 +146,17 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
      */
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        if (lastFirstVisibleItem < firstVisibleItem) {
+            if (lambdaListView.getLastVisiblePosition() == lambdaAdapter.getCount() - 1) {
+                if (!isFetchingLambda) {
+                    this.nextPageToFetch++;
+                    fetchNext(this.nextPageToFetch);
+                    isFetchingLambda = true;
+                }
+            }
+        }
+
+        lastFirstVisibleItem = firstVisibleItem;
     }
 
     /**
@@ -146,7 +176,8 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
      * {@inheritDoc}
      */
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+                                   long id) {
         Lambda lambda = lambdaList.get(position);
         lambda.setSelected(true);
         lambdaAdapter.notifyDataSetChanged();
@@ -157,6 +188,9 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
             public void onClick(View v) {
                 // delete item
                 lambdaList.remove(position);
+
+                // TODO mark lambda as deleted from here
+
                 lambdaAdapter.notifyDataSetChanged();
                 actionBarDelete.setVisibility(View.GONE);
             }
