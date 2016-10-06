@@ -29,47 +29,54 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
     }
 
     private String doGet(String uri) {
-        HttpURLConnection urlConnection;
+        HttpURLConnection connection;
         try {
             URL url = new URL(uri);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in);
+            connection = (HttpURLConnection) url.openConnection();
+
+            int code = connection.getResponseCode();
+            if (code == HttpURLConnection.HTTP_OK) {
+                InputStream in = new BufferedInputStream(connection.getInputStream());
+                return readStream(in);
+            } else if (code == HttpURLConnection.HTTP_NOT_FOUND) {
+                return "";
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // means error
         return null;
     }
 
-    private String readStream(InputStream is) {
-        try {
-            ByteArrayOutputStream bo = new ByteArrayOutputStream();
-            int i = is.read();
-            while (i != -1) {
-                bo.write(i);
-                i = is.read();
-            }
-            return bo.toString();
-        } catch (IOException e) {
-            return "";
+    private String readStream(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int i = in.read();
+        while (i != -1) {
+            out.write(i);
+            i = in.read();
         }
+
+        return out.toString();
     }
 
     @Override
-    protected void onPostExecute(String out) {
-        super.onPostExecute(out);
+    protected void onPostExecute(String response) {
+        super.onPostExecute(response);
 
-        if (out != null) {
+        if (response == null) {
+            listener.onFetchError();
+        } else if (response.isEmpty()) {
+            listener.onFetchEnd();
+        } else {
+            // have data
             try {
-                ArrayList lambdaList = LambdaPraser.getLambdaList(out);
-                listener.onPostFetch(lambdaList);
+                ArrayList lambdaList = LambdaPraser.getLambdaList(response);
+                listener.onFetchDone(lambdaList);
             } catch (JSONException e) {
                 e.printStackTrace();
-                listener.onError();
+                listener.onFetchError();
             }
-        } else {
-            listener.onError();
         }
     }
 }

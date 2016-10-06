@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import lambda.score.com.lambda.asyn.LambdaFetcher;
 import lambda.score.com.lambda.listeners.ILambdaFetchListener;
 import lambda.score.com.lambda.pojo.Lambda;
+import lambda.score.com.lambda.util.ActivityUtils;
 
 public class HomeActivity extends AppCompatActivity implements ILambdaFetchListener, AbsListView.OnScrollListener {
 
-    private int nextPage = 0;
-
-    private ListView lambaListView;
+    private int nextPageToFetch = 0;
+    private ListView lambdaListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +25,15 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
         initUi();
         initActionBar();
         initLambdaList();
-        fetchNext(0);
+        fetchNext(nextPageToFetch);
     }
 
     private void initUi() {
     }
 
     private void initLambdaList() {
-        lambaListView = (ListView) findViewById(R.id.lambda_list);
-        lambaListView.setOnScrollListener(this);
+        lambdaListView = (ListView) findViewById(R.id.lambda_list);
+        lambdaListView.setOnScrollListener(this);
     }
 
     private void initActionBar() {
@@ -44,18 +44,27 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
     }
 
     private void fetchNext(int page) {
+        ActivityUtils.showProgressDialog(this, "Please wait..");
         String uri = "https://rawgit.com/zbsz/test_app/master/" + page + ".json";
-        new LambdaFetcher(HomeActivity.this).execute("https://rawgit.com/zbsz/test_app/master/0.json");
+        new LambdaFetcher(HomeActivity.this).execute(uri);
     }
 
     @Override
-    public void onPostFetch(ArrayList<Lambda> lambdaList) {
+    public void onFetchDone(ArrayList<Lambda> lambdaList) {
         // reload list
+        ActivityUtils.cancelProgressDialog();
     }
 
     @Override
-    public void onError() {
+    public void onFetchError() {
         // display failed to fetch
+        ActivityUtils.cancelProgressDialog();
+    }
+
+    @Override
+    public void onFetchEnd() {
+        // display failed to fetch
+        ActivityUtils.cancelProgressDialog();
     }
 
     @Override
@@ -65,6 +74,10 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        final int lastItem = firstVisibleItem + visibleItemCount;
+        if (lastItem == totalItemCount) {
+            // Last item is fully visible.
 
+        }
     }
 }
