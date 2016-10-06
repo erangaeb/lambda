@@ -37,14 +37,10 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        initUi();
         initToolbar();
         initActionBar();
         initLambdaList();
         fetchNext(nextPageToFetch);
-    }
-
-    private void initUi() {
     }
 
     private void initLambdaList() {
