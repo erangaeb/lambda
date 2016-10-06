@@ -1,9 +1,7 @@
 package com.score.lambda.util;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.view.inputmethod.InputMethodManager;
 
 /**
  * Utility class to handle activity related common functions
@@ -13,18 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 public class ActivityUtils {
 
     private static ProgressDialog progressDialog;
-
-    /**
-     * Hide keyboard
-     * Need to hide soft keyboard in following scenarios
-     * 1. When starting background task
-     * 2. When exit from activity
-     * 3. On button submit
-     */
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getApplicationContext().getSystemService(activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
 
     /**
      * Create and show custom progress dialog

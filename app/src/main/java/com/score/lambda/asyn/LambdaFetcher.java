@@ -32,11 +32,20 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
         this.listener = listener;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String doInBackground(String... params) {
         return fetchLambdas(params[0]);
     }
 
+    /**
+     * HTTP get request to fetch lambdas
+     *
+     * @param uri uri
+     * @return response
+     */
     private String fetchLambdas(String uri) {
         Log.d(TAG, "Fetch lambdas with uri " + uri);
 
@@ -49,9 +58,11 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
 
             int status = connection.getResponseCode();
             if (status == HttpURLConnection.HTTP_OK) {
+                // HTTP 200
                 InputStream in = new BufferedInputStream(connection.getInputStream());
                 return readStream(in);
             } else if (status == HttpURLConnection.HTTP_NOT_FOUND) {
+                // HTTP 404
                 return "";
             }
         } catch (IOException e) {
@@ -62,6 +73,13 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
         return null;
     }
 
+    /**
+     * Convert input stream to string
+     *
+     * @param in input stream
+     * @return string response
+     * @throws IOException
+     */
     private String readStream(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         int i = in.read();
@@ -73,6 +91,9 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
         return out.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);

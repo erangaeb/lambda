@@ -101,9 +101,9 @@ class LambdaListAdapter extends BaseAdapter {
             viewHolder.selected.setVisibility(View.GONE);
         }
 
-        // set text of url
+        // set text/ url
         if (android.util.Patterns.WEB_URL.matcher(lambda.getText()).matches()) {
-            viewHolder.message.setText("URL...");
+            viewHolder.message.setText("URL");
         } else {
             viewHolder.message.setText(lambda.getText());
         }

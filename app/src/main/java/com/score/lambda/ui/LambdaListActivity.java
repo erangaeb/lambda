@@ -50,7 +50,7 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         initToolbar();
         initActionBar();
         initLambdaList();
-        fetchNext(nextPageToFetch);
+        fetchNextPage(nextPageToFetch);
     }
 
     /**
@@ -58,12 +58,14 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
      */
     private void initLambdaList() {
         lambdaListView = (ListView) findViewById(R.id.lambda_list);
-        lambdaListView.setOnScrollListener(this);
-        lambdaListView.setOnItemClickListener(this);
-        lambdaListView.setOnItemLongClickListener(this);
+        if (lambdaListView != null) {
+            lambdaListView.setOnScrollListener(this);
+            lambdaListView.setOnItemClickListener(this);
+            lambdaListView.setOnItemLongClickListener(this);
 
-        lambdaAdapter = new LambdaListAdapter(this, lambdaList);
-        lambdaListView.setAdapter(lambdaAdapter);
+            lambdaAdapter = new LambdaListAdapter(this, lambdaList);
+            lambdaListView.setAdapter(lambdaAdapter);
+        }
     }
 
     /**
@@ -71,9 +73,11 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
      */
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setCollapsible(false);
-        toolbar.setOverScrollMode(Toolbar.OVER_SCROLL_NEVER);
-        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            toolbar.setCollapsible(false);
+            toolbar.setOverScrollMode(Toolbar.OVER_SCROLL_NEVER);
+            setSupportActionBar(toolbar);
+        }
     }
 
     /**
@@ -96,7 +100,7 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
      *
      * @param page next page
      */
-    private void fetchNext(int page) {
+    private void fetchNextPage(int page) {
         if (NetworkUtil.isAvailableNetwork(this)) {
             ActivityUtils.showProgressDialog(this, "Fetching lambdas...");
             String uri = "https://rawgit.com/zbsz/test_app/master/" + page + ".json";
@@ -108,6 +112,11 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         }
     }
 
+    /**
+     * Callback on success lambda fetch
+     *
+     * @param list fetched lambda list
+     */
     @Override
     public void onFetchDone(ArrayList<Lambda> list) {
         // reload list
@@ -118,6 +127,9 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         lambdaAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Callback on lambda fetch error
+     */
     @Override
     public void onFetchError() {
         // display failed to fetch
@@ -126,6 +138,9 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
         Toast.makeText(this, "Fetch error", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Callback on no more lambdas to fetch
+     */
     @Override
     public void onFetchEnd() {
         // display failed to fetch
@@ -150,7 +165,7 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
             if (lambdaListView.getLastVisiblePosition() == lambdaAdapter.getCount() - 1) {
                 if (!isFetchingLambda) {
                     this.nextPageToFetch++;
-                    fetchNext(this.nextPageToFetch);
+                    fetchNextPage(this.nextPageToFetch);
                     isFetchingLambda = true;
                 }
             }
