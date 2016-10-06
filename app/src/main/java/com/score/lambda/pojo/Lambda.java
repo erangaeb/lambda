@@ -6,13 +6,15 @@ package com.score.lambda.pojo;
 
 public class Lambda {
     private String id;
-    private String timestamp;
+    private long timestamp;
     private String text;
+    private boolean isSelected;
 
-    public Lambda(String id, String timestamp, String text) {
+    public Lambda(String id, long timestamp, String text, boolean isSelected) {
         this.id = id;
         this.timestamp = timestamp;
         this.text = text;
+        this.isSelected = isSelected;
     }
 
     public String getId() {
@@ -23,11 +25,11 @@ public class Lambda {
         this.id = id;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -37,5 +39,13 @@ public class Lambda {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

@@ -1,4 +1,4 @@
-package com.score.lambda.listeners;
+package com.score.lambda.listener;
 
 import com.score.lambda.pojo.Lambda;
 

@@ -2,6 +2,9 @@ package com.score.lambda.asyn;
 
 import android.os.AsyncTask;
 
+import com.score.lambda.listener.ILambdaFetchListener;
+import com.score.lambda.util.LambdaParser;
+
 import org.json.JSONException;
 
 import java.io.BufferedInputStream;
@@ -11,9 +14,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-
-import com.score.lambda.listeners.ILambdaFetchListener;
-import com.score.lambda.util.LambdaPraser;
 
 public class LambdaFetcher extends AsyncTask<String, Void, String> {
 
@@ -33,12 +33,14 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
         try {
             URL url = new URL(uri);
             connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
 
-            int code = connection.getResponseCode();
-            if (code == HttpURLConnection.HTTP_OK) {
+            int status = connection.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK) {
                 InputStream in = new BufferedInputStream(connection.getInputStream());
                 return readStream(in);
-            } else if (code == HttpURLConnection.HTTP_NOT_FOUND) {
+            } else if (status == HttpURLConnection.HTTP_NOT_FOUND) {
                 return "";
             }
         } catch (IOException e) {
@@ -63,6 +65,7 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
+        System.out.println(response);
 
         if (response == null) {
             listener.onFetchError();
@@ -71,7 +74,7 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
         } else {
             // have data
             try {
-                ArrayList lambdaList = LambdaPraser.getLambdaList(response);
+                ArrayList lambdaList = LambdaParser.getLambdaList(response);
                 listener.onFetchDone(lambdaList);
             } catch (JSONException e) {
                 e.printStackTrace();
