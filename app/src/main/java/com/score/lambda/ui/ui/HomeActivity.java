@@ -1,16 +1,18 @@
-package lambda.score.com.lambda;
+package com.score.lambda.ui.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.score.lambda.R;
+import com.score.lambda.asyn.asyn.LambdaFetcher;
+import com.score.lambda.listener.listeners.ILambdaFetchListener;
+import com.score.lambda.pojo.pojo.Lambda;
+import com.score.lambda.util.util.ActivityUtils;
+
 import java.util.ArrayList;
 
-import lambda.score.com.lambda.asyn.LambdaFetcher;
-import lambda.score.com.lambda.listeners.ILambdaFetchListener;
-import lambda.score.com.lambda.pojo.Lambda;
-import lambda.score.com.lambda.util.ActivityUtils;
 
 public class HomeActivity extends AppCompatActivity implements ILambdaFetchListener, AbsListView.OnScrollListener {
 

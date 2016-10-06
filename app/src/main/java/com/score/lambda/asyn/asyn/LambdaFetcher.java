@@ -1,4 +1,4 @@
-package lambda.score.com.lambda.asyn;
+package com.score.lambda.asyn.asyn;
 
 import android.os.AsyncTask;
 
@@ -12,8 +12,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import lambda.score.com.lambda.listeners.ILambdaFetchListener;
-import lambda.score.com.lambda.util.LambdaPraser;
+import com.score.lambda.listener.listeners.ILambdaFetchListener;
+import com.score.lambda.util.util.LambdaPraser;
 
 public class LambdaFetcher extends AsyncTask<String, Void, String> {
 

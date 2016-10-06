@@ -1,4 +1,4 @@
-package lambda.score.com.lambda.util;
+package com.score.lambda.util.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

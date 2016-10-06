@@ -1,4 +1,4 @@
-package lambda.score.com.lambda.pojo;
+package com.score.lambda.pojo.pojo;
 
 /**
  * Created by eranga on 10/6/16.

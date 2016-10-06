@@ -1,4 +1,6 @@
-package lambda.score.com.lambda.util;
+package com.score.lambda.util.util;
+
+import com.score.lambda.pojo.pojo.Lambda;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,15 +8,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import lambda.score.com.lambda.pojo.Lambda;
-
 /**
  * Created by eranga on 10/6/16.
  */
 
 public class LambdaPraser {
     public static ArrayList<Lambda> getLambdaList(String in) throws JSONException {
-        ArrayList<Lambda> lambdaList = new ArrayList<Lambda>();
+        ArrayList<Lambda> lambdaList = new ArrayList<>();
 
         JSONArray lambdas = new JSONArray(in);
         for (int i = 0; i < lambdas.length(); i++) {
