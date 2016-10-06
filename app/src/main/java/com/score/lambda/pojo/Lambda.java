@@ -9,12 +9,12 @@ public class Lambda {
     private long timestamp;
     private String text;
     private boolean isSelected;
+    private boolean isDeleted;
 
-    public Lambda(String id, long timestamp, String text, boolean isSelected) {
+    public Lambda(String id, long timestamp, String text) {
         this.id = id;
         this.timestamp = timestamp;
         this.text = text;
-        this.isSelected = isSelected;
     }
 
     public String getId() {
@@ -47,5 +47,13 @@ public class Lambda {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

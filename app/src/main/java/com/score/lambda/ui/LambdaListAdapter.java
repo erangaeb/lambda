@@ -1,6 +1,7 @@
 package com.score.lambda.ui;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,13 @@ public class LambdaListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Lambda> lambdaList;
+    private Typeface typeface;
 
     public LambdaListAdapter(Context context, ArrayList<Lambda> lambdaAList) {
         this.context = context;
         this.lambdaList = lambdaAList;
+
+        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/GeosansLight.ttf");
     }
 
     @Override
@@ -62,6 +66,10 @@ public class LambdaListAdapter extends BaseAdapter {
             holder.time = (TextView) view.findViewById(R.id.lambda_time);
             holder.message = (TextView) view.findViewById(R.id.message);
 
+            holder.id.setTypeface(typeface);
+            holder.time.setTypeface(typeface);
+            holder.message.setTypeface(typeface);
+
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -73,7 +81,7 @@ public class LambdaListAdapter extends BaseAdapter {
 
     private void setUpRow(Lambda lambda, ViewHolder viewHolder) {
         viewHolder.id.setText(lambda.getId().substring(0, 5));
-        viewHolder.time.setText("" + lambda.getTimestamp());
+        viewHolder.time.setText(lambda.getTimestamp() + "");
 
         // viewed flag
         if (lambda.isSelected()) {

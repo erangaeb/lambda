@@ -16,6 +16,7 @@ import com.score.lambda.asyn.LambdaFetcher;
 import com.score.lambda.listener.ILambdaFetchListener;
 import com.score.lambda.pojo.Lambda;
 import com.score.lambda.util.ActivityUtils;
+import com.score.lambda.util.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -76,9 +77,13 @@ public class HomeActivity extends AppCompatActivity implements ILambdaFetchListe
     }
 
     private void fetchNext(int page) {
-        ActivityUtils.showProgressDialog(this, "Please wait..");
-        String uri = "https://rawgit.com/zbsz/test_app/master/" + page + ".json";
-        new LambdaFetcher(HomeActivity.this).execute(uri);
+        if (NetworkUtil.isAvailableNetwork(this)) {
+            ActivityUtils.showProgressDialog(this, "Fetching lambdas...");
+            String uri = "https://rawgit.com/zbsz/test_app/master/" + page + ".json";
+            new LambdaFetcher(HomeActivity.this).execute(uri);
+        } else {
+            Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

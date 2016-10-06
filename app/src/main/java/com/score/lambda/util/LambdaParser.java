@@ -8,10 +8,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by eranga on 10/6/16.
- */
-
 public class LambdaParser {
     public static ArrayList<Lambda> getLambdaList(String in) throws JSONException {
         ArrayList<Lambda> lambdaList = new ArrayList<>();
@@ -19,7 +15,7 @@ public class LambdaParser {
         JSONArray lambdas = new JSONArray(in);
         for (int i = 0; i < lambdas.length(); i++) {
             JSONObject lambda = lambdas.getJSONObject(i);
-            lambdaList.add(new Lambda(lambda.getString("id"), lambda.getLong("time"), lambda.getString("text"), false));
+            lambdaList.add(new Lambda(lambda.getString("id"), lambda.getLong("time"), lambda.getString("text")));
         }
 
         return lambdaList;

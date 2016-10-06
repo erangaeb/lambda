@@ -4,10 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-/**
- * Created by eranga on 10/6/16.
- */
-
 public class LambdaUtils {
     public static String getData(long timeStamp) {
         Date date = new java.util.Date(timeStamp * 1000);
