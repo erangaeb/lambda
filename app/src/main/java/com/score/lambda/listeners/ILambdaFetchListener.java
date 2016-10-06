@@ -1,6 +1,6 @@
-package com.score.lambda.listener.listeners;
+package com.score.lambda.listeners;
 
-import com.score.lambda.pojo.pojo.Lambda;
+import com.score.lambda.pojo.Lambda;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.score.lambda.ui.ui;
+package com.score.lambda.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,10 +6,10 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.score.lambda.R;
-import com.score.lambda.asyn.asyn.LambdaFetcher;
-import com.score.lambda.listener.listeners.ILambdaFetchListener;
-import com.score.lambda.pojo.pojo.Lambda;
-import com.score.lambda.util.util.ActivityUtils;
+import com.score.lambda.asyn.LambdaFetcher;
+import com.score.lambda.listeners.ILambdaFetchListener;
+import com.score.lambda.pojo.Lambda;
+import com.score.lambda.util.ActivityUtils;
 
 import java.util.ArrayList;
 

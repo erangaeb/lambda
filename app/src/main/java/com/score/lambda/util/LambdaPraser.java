@@ -1,6 +1,6 @@
-package com.score.lambda.util.util;
+package com.score.lambda.util;
 
-import com.score.lambda.pojo.pojo.Lambda;
+import com.score.lambda.pojo.Lambda;
 
 import org.json.JSONArray;
 import org.json.JSONException;
