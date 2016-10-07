@@ -49,7 +49,7 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
     private String fetchLambdas(String uri) {
         Log.d(TAG, "Fetch lambdas with uri " + uri);
 
-        HttpURLConnection connection;
+        HttpURLConnection connection = null;
         try {
             URL url = new URL(uri);
             connection = (HttpURLConnection) url.openConnection();
@@ -67,6 +67,8 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) connection.disconnect();
         }
 
         // means error
