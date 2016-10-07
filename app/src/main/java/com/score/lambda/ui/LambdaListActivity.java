@@ -204,7 +204,7 @@ public class LambdaListActivity extends AppCompatActivity implements ILambdaFetc
                 // delete item
                 lambdaList.remove(position);
 
-                // TODO mark lambda as deleted from here
+                // TODO mark lambda as deleted in db from here
 
                 lambdaAdapter.notifyDataSetChanged();
                 actionBarDelete.setVisibility(View.GONE);

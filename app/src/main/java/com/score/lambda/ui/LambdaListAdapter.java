@@ -48,7 +48,7 @@ class LambdaListAdapter extends BaseAdapter {
     }
 
     /**
-     * Create list row viewv
+     * Create list row view
      *
      * @param i         index
      * @param view      current list item view

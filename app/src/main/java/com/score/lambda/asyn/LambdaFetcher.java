@@ -115,7 +115,6 @@ public class LambdaFetcher extends AsyncTask<String, Void, String> {
                 // TODO save lambdas from here
 
                 listener.onFetchDone(lambdaList);
-
             } catch (JSONException e) {
                 e.printStackTrace();
                 listener.onFetchError();
