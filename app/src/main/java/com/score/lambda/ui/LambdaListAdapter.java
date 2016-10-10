@@ -113,7 +113,6 @@ class LambdaListAdapter extends BaseAdapter {
             viewHolder.message.setText("URL");
 
             // download image and load in image view,
-            // TODO refactor this
             if (lambda.getImage() == null) {
                 // set default image first
                 viewHolder.userImage.setImageResource(R.drawable.default_user);

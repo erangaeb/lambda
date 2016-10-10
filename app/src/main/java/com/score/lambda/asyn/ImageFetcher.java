@@ -94,7 +94,8 @@ public class ImageFetcher extends AsyncTask<String, Void, Bitmap> {
         if (imageView != null) {
             if (bitmap != null) {
                 lambda.setImage(bitmap);
-                imageView.setImageBitmap(bitmap);
+
+                //imageView.setImageBitmap(bitmap);
             }
         }
     }
