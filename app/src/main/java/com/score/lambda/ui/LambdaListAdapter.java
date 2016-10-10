@@ -14,6 +14,7 @@ import com.score.lambda.asyn.ImageFetcher;
 import com.score.lambda.pojo.Lambda;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Display lambdas in the list from here
@@ -26,11 +27,15 @@ class LambdaListAdapter extends BaseAdapter {
     private ArrayList<Lambda> lambdaList;
     private Typeface typeface;
 
+    // reusable fetchers
+    private HashMap<String, ImageFetcher> fetcherMap;
+
     LambdaListAdapter(Context context, ArrayList<Lambda> lambdaAList) {
         this.context = context;
         this.lambdaList = lambdaAList;
-
         typeface = Typeface.createFromAsset(context.getAssets(), "fonts/GeosansLight.ttf");
+
+        this.fetcherMap = new HashMap<>();
     }
 
     @Override
@@ -59,7 +64,7 @@ class LambdaListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         final ViewHolder holder;
-        final Lambda lambda = (Lambda) getItem(i);
+        final Lambda lambda = lambdaList.get(i);
 
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -104,15 +109,25 @@ class LambdaListAdapter extends BaseAdapter {
 
         // set text/ url
         if (android.util.Patterns.WEB_URL.matcher(lambda.getText()).matches()) {
+            // this is url
             viewHolder.message.setText("URL");
 
             // download image and load in image view,
             if (lambda.getImage() == null) {
-                new ImageFetcher(viewHolder.userImage, lambda).execute(lambda.getText().trim());
+                // no image with lambda
+                if (!fetcherMap.containsKey(lambda.getId())) {
+                    ImageFetcher fetcher = new ImageFetcher(viewHolder.userImage, lambda);
+                    fetcherMap.put(lambda.getId(), fetcher);
+
+                    fetcher.execute(lambda.getText().trim());
+                }
             } else {
+                // have image with lambda
                 viewHolder.userImage.setImageBitmap(lambda.getImage());
             }
         } else {
+            // not a url, set default image and text
+            viewHolder.userImage.setImageResource(R.drawable.default_user);
             viewHolder.message.setText(lambda.getText());
         }
     }
