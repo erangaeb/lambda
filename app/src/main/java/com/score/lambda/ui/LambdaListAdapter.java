@@ -115,11 +115,14 @@ class LambdaListAdapter extends BaseAdapter {
             // download image and load in image view,
             // TODO refactor this
             if (lambda.getImage() == null) {
+                // set default image first
+                viewHolder.userImage.setImageResource(R.drawable.default_user);
+
                 // no image with lambda
                 if (!fetcherMap.containsKey(lambda.getId())) {
+                    // download image then
                     ImageFetcher fetcher = new ImageFetcher(viewHolder.userImage, lambda);
                     fetcherMap.put(lambda.getId(), fetcher);
-
                     fetcher.execute(lambda.getText().trim());
                 }
             } else {
