@@ -113,26 +113,19 @@ class LambdaListAdapter extends BaseAdapter {
             viewHolder.message.setText("URL");
 
             // download image and load in image view,
-            // TODO refactore and enable this
-//            if (lambda.getImage() == null) {
-//                // no image with lambda
-//                if (!fetcherMap.containsKey(lambda.getId())) {
-//                    ImageFetcher fetcher = new ImageFetcher(viewHolder.userImage, lambda);
-//                    fetcherMap.put(lambda.getId(), fetcher);
-//
-//                    fetcher.execute(lambda.getText().trim());
-//                }
-//            } else {
-//                // have image with lambda
-//                viewHolder.userImage.setImageBitmap(lambda.getImage());
-//            }
-//
-//            if (!fetcherMap.containsKey(lambda.getId())) {
-//                ImageFetcher fetcher = new ImageFetcher(viewHolder.userImage, lambda);
-//                fetcherMap.put(lambda.getId(), fetcher);
-//
-//                fetcher.execute(lambda.getText().trim());
-//            }
+            // TODO refactor and enable this
+            if (lambda.getImage() == null) {
+                // no image with lambda
+                if (!fetcherMap.containsKey(lambda.getId())) {
+                    ImageFetcher fetcher = new ImageFetcher(viewHolder.userImage, lambda);
+                    fetcherMap.put(lambda.getId(), fetcher);
+
+                    fetcher.execute(lambda.getText().trim());
+                }
+            } else {
+                // have image with lambda
+                viewHolder.userImage.setImageBitmap(lambda.getImage());
+            }
         } else {
             // not a url, set default image and text
             viewHolder.userImage.setImageResource(R.drawable.default_user);
