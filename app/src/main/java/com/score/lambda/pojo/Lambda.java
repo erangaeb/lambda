@@ -1,9 +1,12 @@
 package com.score.lambda.pojo;
 
+import android.graphics.Bitmap;
+
 public class Lambda {
     private String id;
     private long timestamp;
     private String text;
+    private Bitmap image;
     private boolean isSelected;
     private boolean isDeleted;
 
@@ -51,5 +54,13 @@ public class Lambda {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

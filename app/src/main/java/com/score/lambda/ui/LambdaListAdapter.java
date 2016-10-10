@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.score.lambda.R;
+import com.score.lambda.asyn.ImageFetcher;
 import com.score.lambda.pojo.Lambda;
 
 import java.util.ArrayList;
@@ -104,6 +105,13 @@ class LambdaListAdapter extends BaseAdapter {
         // set text/ url
         if (android.util.Patterns.WEB_URL.matcher(lambda.getText()).matches()) {
             viewHolder.message.setText("URL");
+
+            // download image and load in image view,
+            if (lambda.getImage() == null) {
+                new ImageFetcher(viewHolder.userImage, lambda).execute(lambda.getText().trim());
+            } else {
+                viewHolder.userImage.setImageBitmap(lambda.getImage());
+            }
         } else {
             viewHolder.message.setText(lambda.getText());
         }
